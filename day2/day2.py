@@ -1,38 +1,16 @@
-winCond = ["A Y", "B Z", "C X"]
-winVal = [2, 3, 1]
-drawCond = ["A X", "B Y", "C Z"]
-drawVal = [1, 2, 3]
-lossCond = ["A Z", "B X", "C Y"]
-lossVal = [3, 1, 2]
+v = {"A Y":8, "B Z":9, "C X":7,
+     "A X":4, "B Y":5, "C Z":6,
+     "A Z":3, "B X":1, "C Y":2}
 
 def part1():
-    value = 0
-    text = open("input.txt").read().strip().split("\n")
-    for test in text:
-        if test in winCond:
-            value+=6+winVal[winCond.index(test)]
-        elif test in drawCond:
-            value+=3+drawVal[drawCond.index(test)]
-        else: value+=lossVal[lossCond.index(test)]
-    print(value)
+    print(sum(map(lambda a: v[a],open("input.txt").read().strip().split("\n"))))
 
-winCond2 = ["A Z", "B Z", "C Z"]
-winVal2 = [2, 3, 1]
-drawCond2 = ["A Y", "B Y", "C Y"]
-drawVal2 = [1, 2, 3]
-lossCond2 = ["A X", "B X", "C X"]
-lossVal2 = [3, 1, 2]
-    
+v2 = {"A Z":8, "B Z":9, "C Z":7,
+            "A Y":4, "B Y":5, "C Y":6,
+            "A X":3, "B X":1, "C X":2}
+
 def part2():
-    value = 0
-    text = open("input.txt").read().strip().split("\n")
-    for test in text:
-        if test in winCond2:
-            value+=6+winVal2[winCond2.index(test)]
-        elif test in drawCond2:
-            value+=3+drawVal2[drawCond2.index(test)]
-        else: value+=lossVal2[lossCond2.index(test)]
-    print(value)
+    print(sum(map(lambda a: v2[a],open("input.txt").read().strip().split("\n"))))
 
 part1()
 part2()
