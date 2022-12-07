@@ -20,5 +20,6 @@ def pt2(inputs):
     else:
         return 1 + pt2(inputs[1:])
 
+sys.setrecursionlimit(10000)
 print(pt1(open("input.txt").read().strip().split("\n")))
 print(pt2(open("input.txt").read().strip().split("\n")))
