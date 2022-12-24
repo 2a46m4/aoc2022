@@ -3,39 +3,21 @@ import copy
 
 updateHeadLocation = {"U": lambda h: (h[0], h[1]+1), "D": lambda h: (h[0], h[1]-1), "R": lambda h: (h[0]+1, h[1]), "L": lambda h: (h[0]-1, h[1])}
 
-def updateTailPos(headPos, tailPos):
-    first = tailPos[0]
-    second = tailPos[1]
-    if headPos[0] - tailPos[0] > 1:
-        first = headPos[0] - 1
-        second = headPos[1]
-        if headPos[1] - tailPos[1] > 1:
-            second = headPos[1] - 1
-        if headPos[1] - tailPos[1] < -1:
-            second = headPos[1] + 1
-    elif headPos[0] - tailPos[0] < -1:
-        first =  headPos[0] + 1
-        second = headPos[1]
-        if headPos[1] - tailPos[1] > 1:
-            second = headPos[1] - 1
-        if headPos[1] - tailPos[1] < -1:
-            second = headPos[1] + 1
-    if headPos[1] - tailPos[1] > 1:
-        first = headPos[0]
-        second = headPos[1] - 1
-        if headPos[0] - tailPos[0] < -1:
-            first =  headPos[0] + 1
-        if headPos[0] - tailPos[0] > 1:
-            first = headPos[0] - 1
-    if headPos[1] - tailPos[1] < -1:
-        first = headPos[0]
-        second = headPos[1] + 1
-        if headPos[0] - tailPos[0] < -1:
-            first =  headPos[0] + 1
-        if headPos[0] - tailPos[0] > 1:
-            first = headPos[0] - 1
-    return (first, second)
+def updateVal(headPos, tailPos, i):
+    val = headPos[i]
+    if headPos[i] - tailPos[i] < -1:
+        val += 1
+    if headPos[i] - tailPos[i] > 1:
+        val -= 1
+    return val
 
+def updateTailPos(headPos, tailPos):
+    X = updateVal(headPos, tailPos, 0)
+    Y = updateVal(headPos, tailPos, 1)
+    if X != headPos[0] or Y != headPos[1]:
+        return (X, Y)
+    else: return tailPos
+    
 def part1(input, curHeadPos, curTailPos):
     if(len(input) == 0):
         return {}
@@ -46,7 +28,6 @@ def part1(input, curHeadPos, curTailPos):
         curTailPos = updateTailPos(curHeadPos, curTailPos)
         input[0][1]-=1
         return {curTailPos}.union(part1(input, curHeadPos, curTailPos))
-
 
 def part2(input, curRopePos):
     if(len(input) == 0):
@@ -59,8 +40,7 @@ def part2(input, curRopePos):
             curRopePos[i+1] = updateTailPos(curRopePos[i], curRopePos[i+1])
         input[0][1] -= 1
         return {curRopePos[9]}.union(part2(input, curRopePos))
-    
-    
+
 sys.setrecursionlimit(100000)
 newlist = []
 for line in open("input.txt").readlines():
